@@ -12,6 +12,12 @@ import org.junit.Assert.*
 class ExampleUnitTest {
     @Test
     fun addition_isCorrect() {
-        assertEquals(4, 2 + 2)
+        val four: Int = 4
+        assertEquals(4, four)
+    }
+
+    @Test
+    fun twoPlusTwo() {
+        assertNotEquals("trump", "biden")
     }
 }
