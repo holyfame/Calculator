@@ -28,7 +28,7 @@ interface Figure {
 }
 
 class Circle(
-    var radius: Double
+    private val radius: Double
 ) : Figure {
 
     override val perimeter: Double
@@ -42,8 +42,8 @@ class Circle(
 }
 
 open class Rectangle(
-    var side1: Double,
-    var side2: Double
+    private val side1: Double,
+    private val side2: Double
 ) : Figure {
 
     override val perimeter: Double
@@ -57,7 +57,7 @@ open class Rectangle(
 }
 
 class Square(
-    var side: Double
+    side: Double
 ) : Rectangle(side, side) {
 
     override val type: String = "Square"
