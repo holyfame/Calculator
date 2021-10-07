@@ -1,4 +1,4 @@
-package com.example.calculator
+package com.example.calculator.presentation.common
 
 import android.os.Bundle
 import android.util.Log
