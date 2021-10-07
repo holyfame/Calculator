@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.Calculator" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+    <style name="Theme.Calculator" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -14,12 +14,13 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Calculator.NoActionBar">
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
+    <style name="MainButton">
+        <item name="android:layout_height">60dp</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:background">@drawable/shape_main_button</item>
+        <item name="android:clickable">true</item>
     </style>
-
-    <style name="Theme.Calculator.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-    <style name="Theme.Calculator.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
