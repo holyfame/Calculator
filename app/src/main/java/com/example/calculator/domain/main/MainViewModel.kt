@@ -18,19 +18,23 @@ class MainViewModel : ViewModel() {
 
     private val _expressionState = MutableLiveData(ExpressionState(expression, 0))
     val expressionState : LiveData<ExpressionState> = _expressionState
-
-    private val _resultState = MutableLiveData<String>()
-    val resultState : LiveData<String> = _resultState
+//
+//    private val _resultState = MutableLiveData<String>()
+//    val resultState : LiveData<String> = _resultState
 
     fun onNumberClick(number: Int, selection: Int) {
         expression += number.toString()
         _expressionState.value = ExpressionState(expression, selection + 1)
-        _resultState.value = calculateExpression(expression)
+//        _resultState.value = calculateExpression(expression)
     }
 
     fun onOperatorClick(operator: Operator, selection: Int) {
         expression += operator.symbol
         _expressionState.value = ExpressionState(expression, selection + 1)
+    }
+
+    fun onBackClick() {
+//        expression
     }
 
 //    private fun String.putInSelection(expression: put: String, selection: Int) {

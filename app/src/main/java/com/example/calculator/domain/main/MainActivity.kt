@@ -31,10 +31,6 @@ class MainActivity : BaseActivity() {
             openSettings()
         }
 
-        viewBinding.mainEquals.setOnClickListener {
-//            viewBinding.mainResult.text = "4"
-        }
-
         listOf(
             viewBinding.main0,
             viewBinding.main1,
@@ -50,15 +46,34 @@ class MainActivity : BaseActivity() {
             textView.setOnClickListener { viewModel.onNumberClick(index, 0) }
         }
 
-        viewModel.expressionState.observe(this) { state ->
-            viewBinding.mainInput.setText(state.expression)
-//            viewBinding.mainInput.setText(state)
+        mapOf(
+            Operator.PLUS to viewBinding.mainPlus,
+            Operator.MINUS to viewBinding.mainMinus,
+            Operator.MULTIPLY to viewBinding.mainMultiply,
+            Operator.DIVIDE to viewBinding.mainDivide
+        ).forEach { (operator, textView) ->
+            textView.setOnClickListener { viewModel.onOperatorClick(operator, 0) }
         }
 
-        viewModel.resultState.observe(this) { state ->
-//            viewBinding.mainResult.setText(state)
-            viewBinding.mainResult.text = calculateExpression(state)
+        viewModel.expressionState.observe(this) { state ->
+            viewBinding.mainInput.setText(state.expression)
         }
+
+
+        viewBinding.mainEquals.setOnClickListener {
+//            viewBinding.mainResult.text = calculateExpression(viewModel.resultState.value?:"")
+            viewBinding.mainResult.text = calculateExpression(viewModel.expressionState.value!!.expression)
+        }
+
+        //        viewModel.resultState.observe(this) { state ->
+//            viewBinding.mainResult.text = calculateExpression(state)
+//        }
+
+//        viewBinding.mainBack.setOnClickListener {
+//            viewModel.
+//        }
+
+
     }
 
     private fun openSettings() {
