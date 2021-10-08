@@ -1,4 +1,4 @@
-package com.example.calculator.presentation.main
+package com.example.calculator.domain.main
 
 import android.os.Bundle
 import android.widget.Toast
@@ -8,6 +8,7 @@ import com.example.calculator.presentation.common.BaseActivity
 import com.example.calculator.R
 import com.example.calculator.presentation.settings.Result
 import com.example.calculator.databinding.MainActivityBinding
+import com.example.calculator.domain.calculateExpression
 
 class MainActivity : BaseActivity() {
 
@@ -31,7 +32,7 @@ class MainActivity : BaseActivity() {
         }
 
         viewBinding.mainEquals.setOnClickListener {
-            viewBinding.mainResult.text = "4"
+//            viewBinding.mainResult.text = "4"
         }
 
         listOf(
@@ -46,22 +47,22 @@ class MainActivity : BaseActivity() {
             viewBinding.main8,
             viewBinding.main9,
         ).forEachIndexed { index, textView ->
-            textView.setOnClickListener { viewModel.onNumberClick(index) }
+            textView.setOnClickListener { viewModel.onNumberClick(index, 0) }
         }
 
         viewModel.expressionState.observe(this) { state ->
-            viewBinding.mainInput.setText(state)
+            viewBinding.mainInput.setText(state.expression)
+//            viewBinding.mainInput.setText(state)
         }
 
         viewModel.resultState.observe(this) { state ->
 //            viewBinding.mainResult.setText(state)
-            viewBinding.mainResult.text = state
+            viewBinding.mainResult.text = calculateExpression(state)
         }
     }
 
     private fun openSettings() {
         getResult.launch(10)
     }
-
 
 }
