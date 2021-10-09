@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Calculator">
 
-        <activity android:name="com.example.calculator.domain.main.MainActivity" android:exported="true">
+        <activity android:name="com.example.calculator.presentation.main.MainActivity" android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
