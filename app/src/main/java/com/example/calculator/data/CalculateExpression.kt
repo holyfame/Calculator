@@ -1,6 +1,7 @@
 package com.example.calculator.domain
 
 import com.fathzer.soft.javaluator.DoubleEvaluator
+import java.lang.StringBuilder
 import kotlin.math.exp
 import kotlin.math.floor
 
@@ -21,5 +22,9 @@ fun calculateExpression(expression: String): String {
 }
 
 fun main() {
-    println(calculateExpression("99999999/10"))
+    var str: String = "555"
+    val stb = StringBuilder(str)
+    stb.deleteAt(2)
+    str = stb.toString()
+    println(str)
 }

@@ -1,11 +1,26 @@
-package com.example.calculator.domain.main
+package com.example.calculator.data
 
+import com.example.calculator.domain.calculateExpression
+import junit.framework.TestCase
 import org.junit.Assert
 import org.junit.Test
 
-import com.example.calculator.domain.calculateExpression
+class CalculateExpressionTest : TestCase() {
 
-class CalculateExpressionKtTest {
+    @Test
+    fun testPlus() {
+        Assert.assertEquals("4", calculateExpression("2 + 2"))
+    }
+
+    @Test
+    fun testMinus() {
+        Assert.assertEquals("0", calculateExpression("2 - 2"))
+    }
+
+    @Test
+    fun testDivide() {
+        Assert.assertEquals("1", calculateExpression("2 / 2"))
+    }
 
     @Test
     fun testExpression() {

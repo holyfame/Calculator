@@ -1,4 +1,4 @@
-package com.example.calculator.domain.main
+package com.example.calculator.presentation.main
 
 import android.os.Bundle
 import android.widget.Toast
@@ -43,7 +43,9 @@ class MainActivity : BaseActivity() {
             viewBinding.main8,
             viewBinding.main9,
         ).forEachIndexed { index, textView ->
-            textView.setOnClickListener { viewModel.onNumberClick(index, 0) }
+            textView.setOnClickListener {
+                viewModel.onNumberClick(index, viewBinding.mainInput.selectionStart)
+            }
         }
 
         mapOf(
@@ -52,32 +54,34 @@ class MainActivity : BaseActivity() {
             Operator.MULTIPLY to viewBinding.mainMultiply,
             Operator.DIVIDE to viewBinding.mainDivide
         ).forEach { (operator, textView) ->
-            textView.setOnClickListener { viewModel.onOperatorClick(operator, 0) }
+            textView.setOnClickListener {
+                viewModel.onOperatorClick(operator, viewBinding.mainInput.selectionStart)
+            }
         }
 
         viewModel.expressionState.observe(this) { state ->
             viewBinding.mainInput.setText(state.expression)
+            viewBinding.mainInput.setSelection(state.selection)
         }
 
+        viewModel.resultState.observe(this) { state ->
+            viewBinding.mainResult.text = state.toString()
+        }
 
         viewBinding.mainEquals.setOnClickListener {
-//            viewBinding.mainResult.text = calculateExpression(viewModel.resultState.value?:"")
-            viewBinding.mainResult.text = calculateExpression(viewModel.expressionState.value!!.expression)
+            viewModel.onEqualsClick()
         }
 
-        //        viewModel.resultState.observe(this) { state ->
-//            viewBinding.mainResult.text = calculateExpression(state)
-//        }
+        viewBinding.mainBack.setOnClickListener {
+            viewModel.onBackClick(viewBinding.mainInput.selectionStart)
+        }
 
-//        viewBinding.mainBack.setOnClickListener {
-//            viewModel.
-//        }
-
-
+        viewBinding.mainClear.setOnClickListener {
+            viewModel.onClearClick()
+        }
     }
 
     private fun openSettings() {
         getResult.launch(10)
     }
-
 }
