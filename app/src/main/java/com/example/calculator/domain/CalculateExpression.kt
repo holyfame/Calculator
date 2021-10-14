@@ -20,11 +20,3 @@ fun calculateExpression(expression: String): String {
         result.toString()
     }
 }
-
-fun main() {
-    var str: String = "555"
-    val stb = StringBuilder(str)
-    stb.deleteAt(2)
-    str = stb.toString()
-    println(str)
-}

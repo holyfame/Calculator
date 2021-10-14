@@ -1,22 +1,34 @@
 package com.example.calculator.presentation.main
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Gravity
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import by.kirich1409.viewbindingdelegate.viewBinding
 import com.example.calculator.presentation.common.BaseActivity
 import com.example.calculator.R
-import com.example.calculator.presentation.settings.Result
 import com.example.calculator.databinding.MainActivityBinding
-import com.example.calculator.domain.calculateExpression
+import com.example.calculator.di.SettingsDaoProvider
+import com.example.calculator.domain.entity.ResultPanelType
+import com.example.calculator.domain.entity.ResultPanelType.LEFT
+import com.example.calculator.domain.entity.ResultPanelType.RIGHT
+import com.example.calculator.domain.entity.ResultPanelType.HIDE
+import com.example.calculator.presentation.settings.SettingsActivity
+import com.example.calculator.presentation.settings.SettingsViewModel
 
 class MainActivity : BaseActivity() {
 
-    private val viewModel: MainViewModel by viewModels()
     private val viewBinding by viewBinding(MainActivityBinding::bind)
-
-    private val getResult = registerForActivityResult(Result()) {
-        result -> Toast.makeText(this, "result: $result", Toast.LENGTH_SHORT).show()
+    private val viewModel: MainViewModel by viewModels() {
+        object : ViewModelProvider.Factory {
+            override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+                return MainViewModel(SettingsDaoProvider.getDao(this@MainActivity)) as T
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +41,18 @@ class MainActivity : BaseActivity() {
 
         viewBinding.mainActivitySettings.setOnClickListener {
             openSettings()
+        }
+
+        viewModel.resultPanelState.observe(this) {
+            with(viewBinding.mainResult) {
+                gravity = when (it) {
+                    LEFT -> Gravity.START.or(Gravity.CENTER_VERTICAL)
+                    RIGHT -> Gravity.END or (Gravity.CENTER_VERTICAL)
+                    HIDE -> gravity
+                }
+                isVisible = it != HIDE
+            }
+
         }
 
         listOf(
@@ -81,7 +105,12 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        viewModel.onStart()
+    }
+
     private fun openSettings() {
-        getResult.launch(10)
+        startActivity(Intent(this, SettingsActivity::class.java))
     }
 }
