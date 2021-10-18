@@ -17,6 +17,7 @@ import com.example.calculator.domain.entity.ResultPanelType
 import com.example.calculator.domain.entity.ResultPanelType.LEFT
 import com.example.calculator.domain.entity.ResultPanelType.RIGHT
 import com.example.calculator.domain.entity.ResultPanelType.HIDE
+import com.example.calculator.presentation.history.HistoryActivity
 import com.example.calculator.presentation.settings.SettingsActivity
 import com.example.calculator.presentation.settings.SettingsViewModel
 
@@ -41,6 +42,10 @@ class MainActivity : BaseActivity() {
 
         viewBinding.mainActivitySettings.setOnClickListener {
             openSettings()
+        }
+
+        viewBinding.mainHistory?.setOnClickListener {
+            openHistory()
         }
 
         viewModel.resultPanelState.observe(this) {
@@ -113,4 +118,10 @@ class MainActivity : BaseActivity() {
     private fun openSettings() {
         startActivity(Intent(this, SettingsActivity::class.java))
     }
+
+    private fun openHistory() {
+        startActivity(Intent(this, HistoryActivity::class.java))
+    }
+
+
 }
