@@ -6,16 +6,17 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.calculator.domain.SettingsDao
 import com.example.calculator.domain.entity.ResultPanelType
+import com.example.calculator.presentation.common.SingleLiveEvent
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     private val settingsDao: SettingsDao
 ) : ViewModel() {
 
-    private val _resultPanelState = MutableLiveData<ResultPanelType>(ResultPanelType.LEFT)
+    private val _resultPanelState = MutableLiveData(ResultPanelType.LEFT)
     val resultPanelState: LiveData<ResultPanelType> = _resultPanelState
 
-    private val _openResultPanelAction = MutableLiveData<ResultPanelType>()
+    private val _openResultPanelAction = SingleLiveEvent<ResultPanelType>()
     val openResultPanelAction: LiveData<ResultPanelType> = _openResultPanelAction
 
     init {
