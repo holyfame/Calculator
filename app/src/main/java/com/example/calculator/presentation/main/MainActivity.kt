@@ -17,7 +17,6 @@ import com.example.calculator.di.SettingsDaoProvider
 import com.example.calculator.domain.entity.ResultPanelType.LEFT
 import com.example.calculator.domain.entity.ResultPanelType.RIGHT
 import com.example.calculator.domain.entity.ResultPanelType.HIDE
-import com.example.calculator.presentation.history.HistoryActivity
 import com.example.calculator.presentation.history.HistoryResult
 import com.example.calculator.presentation.settings.SettingsActivity
 
@@ -88,7 +87,8 @@ class MainActivity : BaseActivity() {
             Operator.PLUS to viewBinding.mainPlus,
             Operator.MINUS to viewBinding.mainMinus,
             Operator.MULTIPLY to viewBinding.mainMultiply,
-            Operator.DIVIDE to viewBinding.mainDivide
+            Operator.DIVIDE to viewBinding.mainDivide,
+            Operator.POINT to viewBinding.mainPoint
         ).forEach { (operator, textView) ->
             textView.setOnClickListener {
                 viewModel.onOperatorClick(operator, viewBinding.mainInput.selectionStart)

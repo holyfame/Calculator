@@ -1,8 +1,6 @@
 package com.example.calculator.domain
 
 import com.fathzer.soft.javaluator.DoubleEvaluator
-import java.lang.StringBuilder
-import kotlin.math.exp
 import kotlin.math.floor
 
 /**

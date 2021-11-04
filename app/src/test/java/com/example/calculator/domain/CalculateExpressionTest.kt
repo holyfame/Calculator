@@ -1,4 +1,4 @@
-package com.example.calculator.data
+package com.example.calculator.domain
 
 import com.example.calculator.domain.calculateExpression
 import junit.framework.TestCase
@@ -24,9 +24,17 @@ class CalculateExpressionTest : TestCase() {
 
     @Test
     fun testExpression() {
-        val expression = "99999999/10"
+        val expression = "99999999 / 10"
         val result = "9999999.9"
         Assert.assertEquals(result, calculateExpression(expression))
+    }
+
+    @Test
+    fun testPrecision() {
+        val expression = "10/3"
+        val result = "3.3"
+        print(calculateExpression(expression))
+//        Assert.assertEquals(result, calculateExpression(expression))
     }
 
     @Test
