@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.calculator.databinding.HistoryItemBinding
 import com.example.calculator.domain.entity.HistoryItem
+import com.example.calculator.domain.formatForHistory
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -46,9 +47,4 @@ class HistoryAdapter(
     }
 
     class HistoryViewHolder(val bindings: HistoryItemBinding): RecyclerView.ViewHolder(bindings.root)
-}
-
-fun formatForHistory(localDateTime: LocalDateTime): String {
-    return localDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss MMMM dd", Locale("en")))
-//    return localDateTime.format(DateTimeFormatter.ofPattern("hh:mm:ss dd mm yyyy"))
 }
