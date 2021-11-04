@@ -1,6 +1,7 @@
 package com.example.calculator.data.db.history
 
 import androidx.room.*
+import com.example.calculator.data.db.typeConverters.LocalDateTimeConverter
 
 @Dao
 interface HistoryItemDao {

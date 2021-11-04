@@ -11,6 +11,7 @@ import com.example.calculator.domain.calculateExpression
 import com.example.calculator.domain.entity.HistoryItem
 import com.example.calculator.domain.entity.ResultPanelType
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
 
 
 class MainViewModel (
@@ -64,7 +65,11 @@ class MainViewModel (
             val result = calculateExpression(expression)
             _resultState.value = result
             viewModelScope.launch {
-                historyRepository.add(HistoryItem(expression, result))
+                historyRepository.add(HistoryItem(
+                    expression,
+                    result,
+                    LocalDateTime.now()
+                ))
             }
         } catch (e: java.lang.IllegalArgumentException) {
             // do nothing

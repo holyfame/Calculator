@@ -37,7 +37,7 @@ class CalculateExpressionTest : TestCase() {
         testCalculation("2+2", "4")
     }
 
-    private fun testCalculation(
+    private fun testCalculation (
         expression: String,
         result: String
     ) {

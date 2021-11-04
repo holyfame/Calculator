@@ -14,7 +14,7 @@ class HistoryRepositoryImpl (
     }
 
     override suspend fun getAll(): List<HistoryItem> =
-        historyItemDao.getAll().map { it.toHistoryItem() }
+        historyItemDao.getAll().map { it.toHistoryItem() }.sortedByDescending { it.createdAt }
 
     override suspend fun clear() {
         historyItemDao.clear()
@@ -23,12 +23,14 @@ class HistoryRepositoryImpl (
     private fun HistoryItem.toHistoryItemEntity() = HistoryItemEntity(
         id = 0,
         expression = expression,
-        result = result
+        result = result,
+        createdAt = createdAt
     )
 
     private fun HistoryItemEntity.toHistoryItem() = HistoryItem(
         expression = expression,
-        result = result
+        result = result,
+        createdAt = createdAt
     )
 }
 

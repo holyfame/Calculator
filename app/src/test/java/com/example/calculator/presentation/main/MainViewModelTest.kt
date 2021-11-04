@@ -1,13 +1,8 @@
 package com.example.calculator.presentation.main
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.calculator.data.SettingsDaoImpl
-import com.example.calculator.di.SettingsDaoProvider
+import com.example.calculator.domain.HistoryRepository
 import com.example.calculator.domain.SettingsDao
-import com.example.calculator.domain.entity.ResultPanelType
-import junit.framework.TestCase
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
@@ -17,10 +12,11 @@ class MainViewModelTest {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
     private val settigsDao: SettingsDao = SettingsDaoFake()
+    private val historyRepository: HistoryRepository = HistoryRepositoryFake()
 
     @Test
     fun testPlus() {
-        val viewModel = MainViewModel(settigsDao)
+        val viewModel = MainViewModel(settigsDao, historyRepository)
 
         viewModel.onNumberClick(2, 0)
         viewModel.onOperatorClick(Operator.PLUS, 1)
@@ -33,7 +29,7 @@ class MainViewModelTest {
 
     @Test
     fun testAsDivide() {
-        val viewModel = MainViewModel(settigsDao)
+        val viewModel = MainViewModel(settigsDao, historyRepository)
 
         viewModel.onNumberClick(1, 0)
         viewModel.onNumberClick(0, 1)
@@ -47,16 +43,3 @@ class MainViewModelTest {
 
 }
 
-class SettingsDaoFake : SettingsDao {
-
-    private var resultPanelType: ResultPanelType = ResultPanelType.LEFT
-
-    override suspend fun setResultPanelType(resultPanelType: ResultPanelType) {
-        this.resultPanelType = resultPanelType
-    }
-
-    override suspend fun getResultPanelType(): ResultPanelType {
-        return resultPanelType
-    }
-
-}
