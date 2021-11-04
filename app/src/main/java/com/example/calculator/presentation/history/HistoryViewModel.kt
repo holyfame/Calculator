@@ -2,31 +2,37 @@ package com.example.calculator.presentation.history
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.calculator.domain.HistoryRepository
 import com.example.calculator.domain.entity.HistoryItem
 import com.example.calculator.presentation.common.SingleLiveEvent
+import kotlinx.coroutines.launch
 
-class HistoryViewModel : ViewModel() {
-
-    private val historyItems: List<HistoryItem> = listOf (
-        HistoryItem("2 + 35 + 54252 + 123", "12313515"),
-        HistoryItem("2 + 35 + 54252 + 123", "12313515"),
-        HistoryItem("2 + 35 + 54252 + 123", "12313515"),
-        HistoryItem("2 + 35 + 54252 + 123", "12313515"),
-        HistoryItem("2 + 35 + 54252 + 123", "12313515")
-    )
+class HistoryViewModel (
+    private val historyRepository: HistoryRepository
+) : ViewModel() {
 
     private val _historyItemsState = MutableLiveData<List<HistoryItem>>()
     val historyItemsState = _historyItemsState
 
-    private val _showToastAction = SingleLiveEvent<HistoryItem>()
-    val showToastAction = _showToastAction
+    private val _closeWithResult = SingleLiveEvent<HistoryItem>()
+    val closeWithResult = _closeWithResult
 
     init {
-        _historyItemsState.value = historyItems
+        viewModelScope.launch {
+            _historyItemsState.value = historyRepository.getAll()
+        }
     }
 
     fun onItemClicked(historyItem: HistoryItem) {
-        _showToastAction.value = historyItem
+        _closeWithResult.value = historyItem
+    }
+
+    fun clearHistory() {
+        viewModelScope.launch {
+            historyRepository.clear()
+            _historyItemsState.value = historyRepository.getAll()
+        }
     }
 
 }

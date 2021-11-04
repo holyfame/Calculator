@@ -183,21 +183,18 @@
 
     <ImageView
         android:id="@+id/main_activity_settings"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="10dp"
+        app:srcCompat="@drawable/ic_baseline_settings_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_settings_24" />
+        style="@style/ControlButton"
+        />
 
     <ImageView
         android:id="@+id/main_history"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:padding="10dp"
         app:srcCompat="@drawable/ic_baseline_history_24"
         app:layout_constraintEnd_toStartOf="@id/main_activity_settings"
         app:layout_constraintTop_toTopOf="parent"
-         />
+        style="@style/ControlButton"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

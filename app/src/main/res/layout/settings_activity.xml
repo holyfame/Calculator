@@ -7,28 +7,19 @@
 
     <TextView
         android:id="@+id/settings_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
         android:text="@string/settings_title"
-        android:textSize="20sp"
-        android:textColor="@color/black"
+        style="@style/TabTitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/settings_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:clickable="true"
-        android:focusable="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_back" />
+        app:srcCompat="@drawable/ic_arrow_back"
+        style="@style/ControlButton"
+        />
 
     <LinearLayout
         android:id="@+id/result_panel_container"
@@ -39,6 +30,8 @@
         android:layout_marginTop="32dp"
         android:orientation="vertical"
         android:gravity="start"
+        android:clickable="true"
+        android:background="@drawable/shape_control_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_title">
@@ -51,7 +44,8 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="@string/settings_result_panel_title"
-            tools:text="Result panel" />
+            tools:text="Result panel"
+            />
 
         <TextView
             android:id="@+id/result_panel_description"
@@ -59,7 +53,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:textSize="16sp"
-            tools:text="Hidden" />
+            tools:text="Hidden"
+            />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

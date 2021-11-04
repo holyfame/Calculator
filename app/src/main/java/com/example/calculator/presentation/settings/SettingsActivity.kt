@@ -18,7 +18,7 @@ class SettingsActivity : BaseActivity() {
     private val viewModel by viewModels<SettingsViewModel> {
         object : ViewModelProvider.Factory {
             override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-                return SettingsViewModel(SettingsDaoProvider.getDao(this@SettingsActivity)) as T
+                return SettingsViewModel(SettingsDaoProvider.get(this@SettingsActivity)) as T
             }
         }
     }
