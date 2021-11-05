@@ -4,7 +4,7 @@ import com.fathzer.soft.javaluator.DoubleEvaluator
 import kotlin.math.floor
 
 /**
- * Рассчитывает значение выражения [expression]
+ * calculate expression [expression]
  */
 fun calculateExpression(expression: String): String {
 
@@ -16,5 +16,25 @@ fun calculateExpression(expression: String): String {
         result.toInt().toString()
     } else {
         result.toString()
+    }
+}
+
+/**
+ * calculate expression [expression] with precision [precision]
+ */
+fun calculateExpression(expression: String, precision: Int): String {
+
+    assert(precision >= 0) {
+        "Precision must be non-negative"
+    }
+
+    if (expression.isBlank()) return ""
+
+    val result = DoubleEvaluator().evaluate(expression)
+
+    return when {
+        floor(result) == result -> result.toInt().toString()
+        precision == -1 -> result.toString()
+        else -> "%.${precision}f".format(result)
     }
 }

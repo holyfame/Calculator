@@ -14,5 +14,9 @@ interface SettingsDao {
      */
     suspend fun setResultPanelType(resultPanelType: ResultPanelType)
 
+    suspend fun getAnswerPrecision(): Int
+
+    suspend fun setAnswerPrecision(answerPrecision: Int)
+
 }
 

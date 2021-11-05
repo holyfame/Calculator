@@ -2,6 +2,8 @@ package com.example.calculator.presentation.settings
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
+import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -11,6 +13,7 @@ import com.example.calculator.R
 import com.example.calculator.databinding.SettingsActivityBinding
 import com.example.calculator.di.SettingsDaoProvider
 import com.example.calculator.domain.entity.ResultPanelType
+import java.lang.Integer.min
 
 class SettingsActivity : BaseActivity() {
 
@@ -26,41 +29,78 @@ class SettingsActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.settings_activity)
+
         viewBinding.settingsBack.setOnClickListener {
             finish()
         }
 
-        viewBinding.resultPanelContainer?.setOnClickListener {
+        viewBinding.resultPanelContainer.setOnClickListener {
             viewModel.onResultPanelTypeClicked()
         }
 
+        viewBinding.precisionContainer.setOnClickListener {
+            showAnswerPrecisionDialog()
+        }
+
         viewModel.resultPanelState.observe(this) { state ->
-            viewBinding.resultPanelDescription?.text =
+            viewBinding.resultPanelDescription.text =
                 resources.getStringArray(R.array.result_panel_types)[state.ordinal]
         }
 
-        viewModel.openResultPanelAction.observe(this) { type ->
-            showDialog(type)
+        viewModel.answerPrecision.observe(this) { state ->
+            viewBinding.precisionValue.text =
+                resources.getString(R.string.digits_after_point, viewModel.answerPrecision.value)
         }
 
+        viewModel.openResultPanelAction.observe(this) { type ->
+            showResultPanelDialog(type)
+        }
     }
 
-    private fun showDialog(type: ResultPanelType) {
+    private fun showResultPanelDialog(type: ResultPanelType) {
         var result: Int? = null
-        AlertDialog.Builder(this)
-            .setTitle(getString(R.string.settings_result_panel_title))
-            .setPositiveButton("Ok") { dialog, id ->
+        val builder = AlertDialog.Builder(this)
+        with (builder) {
+            setTitle(getString(R.string.settings_result_panel_title))
+            setPositiveButton("Ok") { dialog, id ->
                 result?.let {
                     viewModel.onResultPanelTypeChanged(ResultPanelType.values()[it])
                 }
             }
-            .setNegativeButton("Cancel") { dialog, id ->
+            setNegativeButton("Cancel") { _, _ ->
 
             }
-            .setSingleChoiceItems(R.array.result_panel_types, type.ordinal) { diag, id ->
+            setSingleChoiceItems(R.array.result_panel_types, type.ordinal) { _, id ->
                 result = id
             }
-            .show()
+            show()
+        }
+    }
+
+    private fun showAnswerPrecisionDialog() {
+        val builder = AlertDialog.Builder(this)
+        val input = EditText(this)
+        with (input) {
+            hint = "Enter number <= $MAX_DIGITS_AFTER_POINT"
+            inputType = InputType.TYPE_CLASS_NUMBER
+        }
+        with (builder) {
+            setTitle(getString(R.string.settings_answer_precision_title))
+            setView(input)
+            setPositiveButton("Ok") { dialog, id ->
+                input.text.toString().toIntOrNull()?.let {
+                    viewModel.onAnswerPrecisionChanged(min(it, MAX_DIGITS_AFTER_POINT))
+                }
+            }
+            setNegativeButton("Cancel") { _, _ ->
+
+            }
+            show()
+        }
+    }
+
+    companion object {
+        private const val MAX_DIGITS_AFTER_POINT = 10
     }
 
 }

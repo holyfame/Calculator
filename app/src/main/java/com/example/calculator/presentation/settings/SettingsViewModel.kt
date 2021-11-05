@@ -19,9 +19,13 @@ class SettingsViewModel(
     private val _openResultPanelAction = SingleLiveEvent<ResultPanelType>()
     val openResultPanelAction: LiveData<ResultPanelType> = _openResultPanelAction
 
+    private val _answerPrecision = SingleLiveEvent<Int>()
+    val answerPrecision: LiveData<Int> = _answerPrecision
+
     init {
         viewModelScope.launch {
             _resultPanelState.value = settingsDao.getResultPanelType()
+            _answerPrecision.value = settingsDao.getAnswerPrecision()
         }
     }
 
@@ -29,6 +33,13 @@ class SettingsViewModel(
         _resultPanelState.value = resultPanelType
         viewModelScope.launch {
             settingsDao.setResultPanelType(resultPanelType)
+        }
+    }
+
+    fun onAnswerPrecisionChanged(precision: Int) {
+        _answerPrecision.value = precision
+        viewModelScope.launch {
+            settingsDao.setAnswerPrecision(precision)
         }
     }
 

@@ -4,6 +4,7 @@ import com.example.calculator.domain.calculateExpression
 import junit.framework.TestCase
 import org.junit.Assert
 import org.junit.Test
+import java.lang.AssertionError
 
 class CalculateExpressionTest : TestCase() {
 
@@ -32,16 +33,23 @@ class CalculateExpressionTest : TestCase() {
     @Test
     fun testPrecision() {
         val expression = "10/3"
-        val result = "3.3"
-        print(calculateExpression(expression))
-//        Assert.assertEquals(result, calculateExpression(expression))
+        Assert.assertEquals("3", calculateExpression(expression, 0))
+        Assert.assertEquals("3.33", calculateExpression(expression, 2))
+        Assert.assertEquals("3.3333333333333335", calculateExpression(expression))
+    }
+
+    @Test
+    fun testNegativePrecisionAssert() {
+        val expression = "10/3"
+        Assert.assertThrows(AssertionError::class.java) {
+            calculateExpression(expression, -2)
+        }
     }
 
     @Test
     fun testInput() {
         testCalculation("", "")
         testCalculation("2", "2")
-//        testCalculation("2+", "2")
         testCalculation("2+2", "4")
     }
 
@@ -51,4 +59,5 @@ class CalculateExpressionTest : TestCase() {
     ) {
         Assert.assertEquals(result, calculateExpression(expression))
     }
+
 }

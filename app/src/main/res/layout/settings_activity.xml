@@ -23,15 +23,7 @@
 
     <LinearLayout
         android:id="@+id/result_panel_container"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="32dp"
-        android:orientation="vertical"
-        android:gravity="start"
-        android:clickable="true"
-        android:background="@drawable/shape_control_button"
+        style="@style/SettingsItemLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/settings_title">
@@ -44,7 +36,6 @@
             android:textSize="16sp"
             android:textStyle="bold"
             android:text="@string/settings_result_panel_title"
-            tools:text="Result panel"
             />
 
         <TextView
@@ -57,4 +48,33 @@
             />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/precision_container"
+        style="@style/SettingsItemLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/result_panel_container">
+
+        <TextView
+            android:id="@+id/precision_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/settings_answer_precision_title"
+            />
+
+        <TextView
+            android:id="@+id/precision_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            tools:text="default"
+            />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

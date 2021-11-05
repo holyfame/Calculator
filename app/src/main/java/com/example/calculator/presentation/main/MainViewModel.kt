@@ -30,12 +30,6 @@ class MainViewModel (
     private val _resultPanelState = MutableLiveData<ResultPanelType>(ResultPanelType.LEFT)
     val resultPanelState: LiveData<ResultPanelType> = _resultPanelState
 
-    init {
-        viewModelScope.launch {
-            _resultPanelState.value = settingsDao.getResultPanelType()
-        }
-    }
-
     fun onNumberClick(number: Int, selection: Int) {
         expression = putInSelection(expression, number.toString(), selection)
         _expressionState.value = ExpressionState(expression, selection + 1)
@@ -61,24 +55,22 @@ class MainViewModel (
     }
 
     fun onEqualsClick() {
-        try {
-            val result = calculateExpression(expression)
-            _resultState.value = result
-            viewModelScope.launch {
-                historyRepository.add(HistoryItem(
-                    expression,
-                    result,
-                    LocalDateTime.now()
-                ))
+        viewModelScope.launch {
+            try {
+                val precision = settingsDao.getAnswerPrecision()
+                val result = calculateExpression(expression, precision)
+                _resultState.value = result
+                viewModelScope.launch {
+                    historyRepository.add(HistoryItem(
+                        expression,
+                        result,
+                        LocalDateTime.now()
+                    ))
+                }
+            } catch (e: java.lang.IllegalArgumentException) {
+                // do nothing
             }
-        } catch (e: java.lang.IllegalArgumentException) {
-            // do nothing
         }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.d("MainViewModel", "onCleared")
     }
 
     fun onStart() {
