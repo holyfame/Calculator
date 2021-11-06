@@ -32,9 +32,9 @@ fun calculateExpression(expression: String, precision: Int): String {
 
     val result = DoubleEvaluator().evaluate(expression)
 
-    return when {
-        floor(result) == result -> result.toInt().toString()
-        precision == -1 -> result.toString()
-        else -> "%.${precision}f".format(result)
+    return if (floor(result) == result) {
+        result.toInt().toString()
+    } else {
+        "%.${precision}f".format(result)
     }
 }

@@ -22,6 +22,7 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">24sp</item>
         <item name="android:background">@drawable/shape_main_button</item>
+        <item name="backgroundTintMode">multiply</item>
         <item name="android:clickable">true</item>
     </style>
 

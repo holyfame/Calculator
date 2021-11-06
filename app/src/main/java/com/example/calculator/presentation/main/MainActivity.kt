@@ -88,11 +88,18 @@ class MainActivity : BaseActivity() {
             Operator.MINUS to viewBinding.mainMinus,
             Operator.MULTIPLY to viewBinding.mainMultiply,
             Operator.DIVIDE to viewBinding.mainDivide,
-            Operator.POINT to viewBinding.mainPoint
+            Operator.POINT to viewBinding.mainPoint,
+            Operator.POWER to viewBinding.mainPower,
+            Operator.LEFT_BRACE to viewBinding.mainLeftBrace,
+            Operator.RIGHT_BRACE to viewBinding.mainRightBrace
         ).forEach { (operator, textView) ->
-            textView.setOnClickListener {
+            textView?.setOnClickListener {
                 viewModel.onOperatorClick(operator, viewBinding.mainInput.selectionStart)
             }
+        }
+
+        viewBinding.mainSqrt?.setOnClickListener {
+            viewModel.onSqrtClick(viewBinding.mainInput.selectionStart)
         }
 
         viewModel.expressionState.observe(this) { state ->

@@ -47,6 +47,13 @@ class CalculateExpressionTest : TestCase() {
     }
 
     @Test
+    fun testBraces() {
+        val expression = "(2 + 5) ^ (1/2)"
+        val result = calculateExpression(expression, 3)
+        assertEquals("2.646", result)
+    }
+
+    @Test
     fun testInput() {
         testCalculation("", "")
         testCalculation("2", "2")

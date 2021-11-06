@@ -40,6 +40,15 @@ class MainViewModel (
         _expressionState.value = ExpressionState(expression, selection + 1)
     }
 
+    fun onSqrtClick(selection: Int) {
+        onOperatorClick(Operator.POWER, selection)
+        onOperatorClick(Operator.LEFT_BRACE, selection + 1)
+        onNumberClick(0, selection + 2)
+        onOperatorClick(Operator.POINT, selection + 3)
+        onNumberClick(5, selection + 4)
+        onOperatorClick(Operator.RIGHT_BRACE, selection + 5)
+    }
+
     fun onBackClick(selection: Int) {
         if (selection <= 0) {
             return
