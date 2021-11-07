@@ -150,7 +150,6 @@ class MainActivity : BaseActivity() {
     }
 
     private fun vibrate() {
-        Log.d("vibrate", "vibration type is ${viewModel.vibrationType.value}")
         val type = viewModel.vibrationType.value
         if (type == VibrationType.NONE) {
             return
