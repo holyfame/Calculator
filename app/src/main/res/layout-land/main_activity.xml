@@ -209,7 +209,8 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_marginBottom="10dp"
-        app:layout_constraintBottom_toTopOf="@id/main_buttons_container">
+        app:layout_constraintBottom_toTopOf="@id/main_buttons_container"
+        app:layout_constraintEnd_toStartOf="@id/main_history">
 
         <EditText
             android:id="@+id/main_input"

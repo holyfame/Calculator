@@ -77,4 +77,32 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/vibration_container"
+        style="@style/SettingsItemLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/precision_container">
+
+        <TextView
+            android:id="@+id/vibration_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:text="@string/settings_vibration_title"
+            />
+
+        <TextView
+            android:id="@+id/vibration_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textSize="16sp"
+            tools:text="Default"
+            />
+
+    </LinearLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

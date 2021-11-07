@@ -3,6 +3,7 @@
     <string name="settings">Settings</string>
     <string name="settings_result_panel_title">Result panel</string>
     <string name="settings_answer_precision_title">Answer precision</string>
+    <string name="settings_vibration_title">Vibration strength</string>
     <string name="history_title">History</string>
     <string name="settings_title">Settings</string>
     <string name="digits_after_point">%d digits after decimal point</string>
@@ -10,5 +11,11 @@
         <item>Left side</item>
         <item>Right side</item>
         <item>Hidden</item>
+    </string-array>
+    <string-array name="vibration_types">
+        <item>None</item>
+        <item>Light</item>
+        <item>Normal</item>
+        <item>Heavy</item>
     </string-array>
 </resources>

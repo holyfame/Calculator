@@ -1,6 +1,7 @@
 package com.example.calculator.domain
 
 import com.example.calculator.domain.entity.ResultPanelType
+import com.example.calculator.domain.entity.VibrationType
 
 interface SettingsDao {
 
@@ -17,6 +18,10 @@ interface SettingsDao {
     suspend fun getAnswerPrecision(): Int
 
     suspend fun setAnswerPrecision(answerPrecision: Int)
+
+    suspend fun getVibrationType(): VibrationType
+
+    suspend fun setVibrationType(vibrationType: VibrationType)
 
 }
 

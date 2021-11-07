@@ -1,6 +1,6 @@
 package com.example.calculator.presentation.main
 
-import android.util.Log
+import android.os.VibrationEffect
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +10,7 @@ import com.example.calculator.domain.SettingsDao
 import com.example.calculator.domain.calculateExpression
 import com.example.calculator.domain.entity.HistoryItem
 import com.example.calculator.domain.entity.ResultPanelType
+import com.example.calculator.domain.entity.VibrationType
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
@@ -29,6 +30,11 @@ class MainViewModel (
 
     private val _resultPanelState = MutableLiveData<ResultPanelType>(ResultPanelType.LEFT)
     val resultPanelState: LiveData<ResultPanelType> = _resultPanelState
+
+    private var _vibrationType = MutableLiveData<VibrationType>(VibrationType.NONE)
+    val vibrationType: LiveData<VibrationType> = _vibrationType
+
+    private var _precision: Int = 3
 
     fun onNumberClick(number: Int, selection: Int) {
         expression = putInSelection(expression, number.toString(), selection)
@@ -64,27 +70,26 @@ class MainViewModel (
     }
 
     fun onEqualsClick() {
-        viewModelScope.launch {
-            try {
-                val precision = settingsDao.getAnswerPrecision()
-                val result = calculateExpression(expression, precision)
-                _resultState.value = result
-                viewModelScope.launch {
-                    historyRepository.add(HistoryItem(
-                        expression,
-                        result,
-                        LocalDateTime.now()
-                    ))
-                }
-            } catch (e: java.lang.IllegalArgumentException) {
-                // do nothing
+        try {
+            val result = calculateExpression(expression, _precision)
+            _resultState.value = result
+            viewModelScope.launch {
+                historyRepository.add(HistoryItem(
+                    expression,
+                    result,
+                    LocalDateTime.now()
+                ))
             }
+        } catch (e: java.lang.IllegalArgumentException) {
+            // do nothing
         }
     }
 
     fun onStart() {
         viewModelScope.launch {
             _resultPanelState.value = settingsDao.getResultPanelType()
+            _precision = settingsDao.getAnswerPrecision()
+            _vibrationType.value = settingsDao.getVibrationType()
         }
     }
 

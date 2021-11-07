@@ -13,6 +13,7 @@ import com.example.calculator.R
 import com.example.calculator.databinding.SettingsActivityBinding
 import com.example.calculator.di.SettingsDaoProvider
 import com.example.calculator.domain.entity.ResultPanelType
+import com.example.calculator.domain.entity.VibrationType
 import java.lang.Integer.min
 
 class SettingsActivity : BaseActivity() {
@@ -42,18 +43,31 @@ class SettingsActivity : BaseActivity() {
             showAnswerPrecisionDialog()
         }
 
+        viewBinding.vibrationContainer.setOnClickListener {
+            viewModel.onVibrationTypeClicked()
+        }
+
         viewModel.resultPanelState.observe(this) { state ->
             viewBinding.resultPanelDescription.text =
                 resources.getStringArray(R.array.result_panel_types)[state.ordinal]
         }
 
-        viewModel.answerPrecision.observe(this) { state ->
+        viewModel.answerPrecision.observe(this) { _ ->
             viewBinding.precisionValue.text =
                 resources.getString(R.string.digits_after_point, viewModel.answerPrecision.value)
         }
 
+        viewModel.vibrationType.observe(this) { state ->
+            viewBinding.vibrationDescription.text =
+                resources.getStringArray(R.array.vibration_types)[state.ordinal]
+        }
+
         viewModel.openResultPanelAction.observe(this) { type ->
             showResultPanelDialog(type)
+        }
+
+        viewModel.openVibrationType.observe(this) { type ->
+            showVibrationDialog(type)
         }
     }
 
@@ -62,7 +76,7 @@ class SettingsActivity : BaseActivity() {
         val builder = AlertDialog.Builder(this)
         with (builder) {
             setTitle(getString(R.string.settings_result_panel_title))
-            setPositiveButton("Ok") { dialog, id ->
+            setPositiveButton("Ok") { _, _ ->
                 result?.let {
                     viewModel.onResultPanelTypeChanged(ResultPanelType.values()[it])
                 }
@@ -87,13 +101,33 @@ class SettingsActivity : BaseActivity() {
         with (builder) {
             setTitle(getString(R.string.settings_answer_precision_title))
             setView(input)
-            setPositiveButton("Ok") { dialog, id ->
+            setPositiveButton("Ok") { _, _ ->
                 input.text.toString().toIntOrNull()?.let {
                     viewModel.onAnswerPrecisionChanged(min(it, MAX_DIGITS_AFTER_POINT))
                 }
             }
             setNegativeButton("Cancel") { _, _ ->
 
+            }
+            show()
+        }
+    }
+
+    private fun showVibrationDialog(type: VibrationType) {
+        var result: Int? = null
+        val builder = AlertDialog.Builder(this)
+        with (builder) {
+            setTitle(getString(R.string.settings_vibration_title))
+            setPositiveButton("Ok") { _, _ ->
+                result?.let {
+                    viewModel.onVibrationTypeChanged(VibrationType.values()[it])
+                }
+            }
+            setNegativeButton("Cancel") { _, _ ->
+
+            }
+            setSingleChoiceItems(R.array.vibration_types, type.ordinal) { _, id ->
+                result = id
             }
             show()
         }

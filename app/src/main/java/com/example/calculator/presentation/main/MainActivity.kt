@@ -1,10 +1,16 @@
 package com.example.calculator.presentation.main
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.VibrationEffect.EFFECT_TICK
+import android.os.Vibrator
+import android.util.Log
 import android.view.Gravity
 import androidx.activity.result.launch
 import androidx.activity.viewModels
+import androidx.core.content.getSystemService
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +23,7 @@ import com.example.calculator.di.SettingsDaoProvider
 import com.example.calculator.domain.entity.ResultPanelType.LEFT
 import com.example.calculator.domain.entity.ResultPanelType.RIGHT
 import com.example.calculator.domain.entity.ResultPanelType.HIDE
+import com.example.calculator.domain.entity.VibrationType
 import com.example.calculator.presentation.history.HistoryResult
 import com.example.calculator.presentation.settings.SettingsActivity
 
@@ -50,7 +57,7 @@ class MainActivity : BaseActivity() {
             openSettings()
         }
 
-        viewBinding.mainHistory?.setOnClickListener {
+        viewBinding.mainHistory.setOnClickListener {
             openHistory()
         }
 
@@ -63,7 +70,6 @@ class MainActivity : BaseActivity() {
                 }
                 isVisible = it != HIDE
             }
-
         }
 
         listOf(
@@ -80,6 +86,7 @@ class MainActivity : BaseActivity() {
         ).forEachIndexed { index, textView ->
             textView.setOnClickListener {
                 viewModel.onNumberClick(index, viewBinding.mainInput.selectionStart)
+                vibrate()
             }
         }
 
@@ -95,11 +102,13 @@ class MainActivity : BaseActivity() {
         ).forEach { (operator, textView) ->
             textView?.setOnClickListener {
                 viewModel.onOperatorClick(operator, viewBinding.mainInput.selectionStart)
+                vibrate()
             }
         }
 
         viewBinding.mainSqrt?.setOnClickListener {
             viewModel.onSqrtClick(viewBinding.mainInput.selectionStart)
+            vibrate()
         }
 
         viewModel.expressionState.observe(this) { state ->
@@ -113,14 +122,17 @@ class MainActivity : BaseActivity() {
 
         viewBinding.mainEquals.setOnClickListener {
             viewModel.onEqualsClick()
+            vibrate()
         }
 
         viewBinding.mainBack.setOnClickListener {
             viewModel.onBackClick(viewBinding.mainInput.selectionStart)
+            vibrate()
         }
 
         viewBinding.mainClear.setOnClickListener {
             viewModel.onClearClick()
+            vibrate()
         }
     }
 
@@ -135,6 +147,24 @@ class MainActivity : BaseActivity() {
 
     private fun openHistory() {
         resultLauncher.launch()
+    }
+
+    private fun vibrate() {
+        Log.d("vibrate", "vibration type is ${viewModel.vibrationType.value}")
+        val type = viewModel.vibrationType.value
+        if (type == VibrationType.NONE) {
+            return
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            with (getSystemService<Vibrator>()) {
+                this?.vibrate(viewModel.vibrationType.value?.let { it1 ->
+                    VibrationEffect.createOneShot(
+                        it1.value.duration,
+                        it1.value.type
+                    )
+                })
+            }
+        }
     }
 
 }
