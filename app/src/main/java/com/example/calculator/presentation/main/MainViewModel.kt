@@ -1,6 +1,7 @@
 package com.example.calculator.presentation.main
 
 import android.os.VibrationEffect
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -69,8 +70,11 @@ class MainViewModel (
         _resultState.value = ""
     }
 
-    fun onEqualsClick() {
-        try {
+    /**
+     * returns false if expression is invalid
+     */
+    fun onEqualsClick(): Boolean {
+        return try {
             val result = calculateExpression(expression, _precision)
             _resultState.value = result
             viewModelScope.launch {
@@ -80,8 +84,9 @@ class MainViewModel (
                     LocalDateTime.now()
                 ))
             }
+            true
         } catch (e: java.lang.IllegalArgumentException) {
-            // do nothing
+            false
         }
     }
 

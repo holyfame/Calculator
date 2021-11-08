@@ -8,6 +8,7 @@ import android.os.VibrationEffect.EFFECT_TICK
 import android.os.Vibrator
 import android.util.Log
 import android.view.Gravity
+import android.widget.Toast
 import androidx.activity.result.launch
 import androidx.activity.viewModels
 import androidx.core.content.getSystemService
@@ -121,7 +122,9 @@ class MainActivity : BaseActivity() {
         }
 
         viewBinding.mainEquals.setOnClickListener {
-            viewModel.onEqualsClick()
+            if (!viewModel.onEqualsClick()) {
+                Toast.makeText(applicationContext, "invalid expression", Toast.LENGTH_SHORT).show()
+            }
             vibrate()
         }
 
