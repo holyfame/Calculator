@@ -1,7 +1,5 @@
 package com.example.calculator.presentation.main
 
-import android.os.VibrationEffect
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +8,7 @@ import com.example.calculator.domain.HistoryRepository
 import com.example.calculator.domain.SettingsDao
 import com.example.calculator.domain.calculateExpression
 import com.example.calculator.domain.entity.HistoryItem
+import com.example.calculator.domain.entity.Operator
 import com.example.calculator.domain.entity.ResultPanelType
 import com.example.calculator.domain.entity.VibrationType
 import kotlinx.coroutines.launch

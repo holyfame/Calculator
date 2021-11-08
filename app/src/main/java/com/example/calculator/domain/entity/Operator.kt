@@ -1,4 +1,4 @@
-package com.example.calculator.presentation.main
+package com.example.calculator.domain.entity
 
 enum class Operator(val symbol: String) {
     MINUS("-"),

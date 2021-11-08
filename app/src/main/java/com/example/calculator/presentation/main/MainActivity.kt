@@ -4,9 +4,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.os.VibrationEffect
-import android.os.VibrationEffect.EFFECT_TICK
 import android.os.Vibrator
-import android.util.Log
 import android.view.Gravity
 import android.widget.Toast
 import androidx.activity.result.launch
@@ -21,6 +19,7 @@ import com.example.calculator.R
 import com.example.calculator.databinding.MainActivityBinding
 import com.example.calculator.di.HistoryRepositoryProvider
 import com.example.calculator.di.SettingsDaoProvider
+import com.example.calculator.domain.entity.Operator
 import com.example.calculator.domain.entity.ResultPanelType.LEFT
 import com.example.calculator.domain.entity.ResultPanelType.RIGHT
 import com.example.calculator.domain.entity.ResultPanelType.HIDE

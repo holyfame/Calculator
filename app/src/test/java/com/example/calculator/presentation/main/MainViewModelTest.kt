@@ -3,6 +3,7 @@ package com.example.calculator.presentation.main
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.example.calculator.domain.HistoryRepository
 import com.example.calculator.domain.SettingsDao
+import com.example.calculator.domain.entity.Operator
 import org.junit.Assert
 import org.junit.Rule
 import org.junit.Test
