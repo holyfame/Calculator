@@ -1,10 +1,12 @@
 package com.example.calculator.domain
 
 import com.example.calculator.domain.calculateExpression
+import com.fathzer.soft.javaluator.DoubleEvaluator
 import junit.framework.TestCase
 import org.junit.Assert
 import org.junit.Test
 import java.lang.AssertionError
+import kotlin.math.floor
 
 class CalculateExpressionTest : TestCase() {
 
@@ -21,6 +23,13 @@ class CalculateExpressionTest : TestCase() {
     @Test
     fun testDivide() {
         Assert.assertEquals("1", calculateExpression("2 / 2"))
+    }
+
+    @Test
+    fun testZeroDivision() {
+        val result = DoubleEvaluator().evaluate("2 / 0")
+        println(result % 1.0 == 0.0)
+        println(result.toLong().toString())
     }
 
     @Test
